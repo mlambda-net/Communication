@@ -1,0 +1,79 @@
+
+services:
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    restart: always
+    networks:
+      - local
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - local
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    networks:
+      - local
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+        
+        
+  master-load:
+    image: load/master
+    build:
+      context: ./LoadTest
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONPATH=/app
+    ports:
+      - "8089:8089"
+      - "5557:5557"
+    volumes:
+      - ./LoadTest:/app
+    networks:
+      - local
+    command: locust -f /app/product_test.py --master -H http://host.docker.internal:5000
+    
+  worker-load:
+    image: load/worker
+    build:
+      context: ./LoadTest
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 5
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - local
+    volumes:
+      - ./LoadTest:/app
+    command: locust -f /app/product_test.py --worker --master-host master-load
+    
+
+
+networks:
+  local:
+    external: true
+
+volumes:
+  mongodb_data: 
+  grafana_data:

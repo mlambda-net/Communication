@@ -1,0 +1,166 @@
+﻿- category: Electronics
+  subcategories:
+    - Smartphones
+    - Laptops
+    - Cameras
+    - Audio equipment
+    - Wearable technology
+- category: Clothing and Apparel
+  subcategories:
+    - Men's Clothing
+    - Women's Clothing
+    - Footwear
+    - Accessories
+    - Coats
+- category: Home and Kitchen
+  subcategories:
+    - Furniture
+    - Kitchen appliances
+    - Home decoration
+    - Bedding
+    - Kitchen utensils
+- category: Health and Beauty
+  subcategories:
+    - Skin care
+    - Hair care
+    - Vitamins and Supplements
+    - Cosmetics
+    - Personal care
+- category: Sports and Outdoors
+  subcategories:
+    - Fitness equipment
+    - Outdoor gear
+    - Sports clothing
+    - Camping gear
+    - Cycling
+- category: Toys and Games
+  subcategories:
+    - Board games
+    - Action figures
+    - Educational toys
+    - Video games
+    - Puzzles
+- category: Automotive
+  subcategories:
+    - Automotive accessories
+    - Motorcycles and Scooters
+    - Car parts
+    - Car care
+    - Tires and Wheels
+- category: Books and Stationery
+  subcategories:
+    - Fiction/Non-fiction
+    - Educational materials
+    - Notebooks and Journals
+    - Office supplies
+    - Planners
+- category: Food and Gourmet
+  subcategories:
+    - Beverages
+    - Snacks
+    - Organic foods
+    - Pantry staples
+    - Specialty foods
+- category: Pet Supplies
+  subcategories:
+    - Pet food
+    - Toys
+    - Grooming supplies
+    - Pet clothing
+    - Aquarium supplies
+- category: Jewelry and Watches
+  subcategories:
+    - Necklaces
+    - Rings
+    - Bracelets
+    - Watches
+    - Earrings
+- category: Baby Products
+  subcategories:
+    - Baby clothing
+    - Baby accessories
+    - Diapers
+    - Baby furniture
+    - Feeding supplies
+- category: Office Supplies
+  subcategories:
+    - Writing instruments
+    - Paper products
+    - Office electronics
+    - Organizers
+    - Presentation supplies
+- category: Musical Instruments
+  subcategories:
+    - Guitars
+    - Keyboards
+    - Drums
+    - Wind instruments
+    - Recording equipment
+- category: Tools and Home Improvements
+  subcategories:
+    - Power tools
+    - Hand tools
+    - Lighting
+    - Plumbing
+    - Hardware
+- category: Garden and Outdoor
+  subcategories:
+    - Gardening tools
+    - Outdoor furniture
+    - Grills and Outdoor Cooking
+    - Plants and Seeds
+    - Patio decoration
+- category: Arts, Crafts, and Sewing
+  subcategories:
+    - Fabric
+    - Drawing and painting supplies
+    - Sewing machines
+    - Crafting tools
+    - Knitting and Crochet
+- category: Industrial and Scientific
+  subcategories:
+    - Laboratory equipment
+    - Professional tools
+    - Industrial materials
+    - Safety equipment
+    - Scientific instruments
+- category: Movies and TV
+  subcategories:
+    - DVDs and Blu-rays
+    - Streaming media
+    - TV shows
+    - Documentaries
+    - Children's programs
+- category: Travel and Luggage
+  subcategories:
+    - Luggage
+    - Travel accessories
+    - Backpacks
+    - Suitcases
+    - Travel gear
+- category: Toys and Family Entertainment
+  subcategories:
+    - Baby toys
+    - Outdoor games
+    - Plush toys
+    - Kids' art kits
+- category: Beauty and Personal Care
+  subcategories:
+    - Makeup
+    - Perfumes
+    - Hair care products
+    - Nail care
+    - Personal hygiene
+- category: Home Technology
+  subcategories:
+    - Vacuum cleaners
+    - Security systems
+    - Smart appliances
+    - Climate control
+- category: Construction and Materials
+  subcategories:
+    - Building materials
+    - Heavy equipment
+    - Electrical supplies
+    - Hardware
+    - Painting supplies
