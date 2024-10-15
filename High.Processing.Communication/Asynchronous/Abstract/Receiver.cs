@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Text.Json;
-using NetMQ;
+﻿using NetMQ;
 
 namespace High.Processing.Communication.Asynchronous.Abstract;
 
@@ -8,8 +6,10 @@ public abstract class Receiver : IReceiver, IDisposable
 {
     private readonly Dictionary<string, Orchestrator> _orchestrators = new();
 
-
-    protected abstract INetMQSocket CreateSocket(string topic);
+    public void Dispose()
+    {
+        foreach (var orchestrator in _orchestrators.Values) orchestrator.Dispose();
+    }
 
     public Task Receive<T>(Func<T, Task> handler, string topic)
     {
@@ -23,29 +23,17 @@ public abstract class Receiver : IReceiver, IDisposable
 
         return Task.CompletedTask;
     }
-    
+
+
+    protected abstract INetMQSocket CreateSocket(string topic);
+
     public void Start()
     {
-        foreach (var orchestrator in _orchestrators.Values)
-        {
-            orchestrator.Start();
-        }
+        foreach (var orchestrator in _orchestrators.Values) orchestrator.Start();
     }
 
     public void Stop()
     {
-        foreach (var orchestrator in _orchestrators.Values)
-        {
-            orchestrator.Stop();
-        }
-    }
-
-    public void Dispose()
-    {
-        foreach (var orchestrator in _orchestrators.Values)
-        {
-            orchestrator.Dispose();
-        }
-
+        foreach (var orchestrator in _orchestrators.Values) orchestrator.Stop();
     }
 }

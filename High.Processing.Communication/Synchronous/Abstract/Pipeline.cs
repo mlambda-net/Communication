@@ -6,12 +6,12 @@ namespace High.Processing.Communication.Synchronous.Abstract;
 
 public class Pipeline
 {
+    private readonly Dictionary<string, List<Action<string>>> _actions;
+    private readonly CancellationTokenSource _cancellation;
 
     private readonly Thread _listener;
-    private readonly CancellationTokenSource _cancellation;
-    private readonly Dictionary<string, List<Action<string>>> _actions;
-    private readonly ConcurrentQueue<string> _topics;
     private readonly INetMQSocket _socket;
+    private readonly ConcurrentQueue<string> _topics;
 
     public Pipeline(INetMQSocket socket)
     {
@@ -21,7 +21,7 @@ public class Pipeline
         _listener = new Thread(TopicListener);
         _cancellation = new CancellationTokenSource();
     }
-    
+
     public void Start()
     {
         _listener.Start();
@@ -47,16 +47,10 @@ public class Pipeline
         var transform = (string msg) =>
         {
             var message = JsonSerializer.Deserialize<T>(msg);
-            if (message != null)
-            {
-                callback(message);
-            }
+            if (message != null) callback(message);
         };
 
-        if (_actions.TryGetValue(topic, out var action))
-        {
-            action.Add(transform);
-        }
+        if (_actions.TryGetValue(topic, out var action)) action.Add(transform);
 
         _actions.Add(topic, [transform]);
         _topics.Enqueue(topic);
@@ -85,5 +79,4 @@ public class Pipeline
             Parallel.ForEach(actions, action => action(msgReceived));
         }
     }
-
 }

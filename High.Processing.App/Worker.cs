@@ -1,24 +1,24 @@
 ﻿using System.Diagnostics;
 using High.Processing.Domain.Events;
 using High.Processing.Infrastructure.DataBase;
-using Prometheus;
 using High.Processing.Infrastructure.Event;
 using MongoDB.Driver;
+using Prometheus;
 
 namespace High.Processing.App;
 
 public class Worker
 {
+    private readonly Gauge _liveRequest;
     private readonly MetricServer _metricServer;
     private readonly EventOrchestrator _orchestrator;
     private readonly Counter _requestCount;
     private readonly Histogram _requestDuration;
-    private readonly Gauge _liveRequest;
 
 
     public Worker()
     {
-        _metricServer = new MetricServer(port: 8081);
+        _metricServer = new MetricServer(8081);
         _orchestrator = new EventOrchestrator();
 
         _requestCount = Metrics.CreateCounter("product_call_total", "HTTP Requests Total", new CounterConfiguration
@@ -41,9 +41,9 @@ public class Worker
         var settings = new MongoSettings
         {
             ConnectionString = "mongodb://localhost:27017",
-            Database = "MiniStore",
+            Database = "MiniStore"
         };
-        
+
         var client = new MongoClient(settings.ConnectionString);
         var uow = new UnitOfWork(client);
         var handler = new PersistentHandler(uow);
@@ -57,9 +57,7 @@ public class Worker
         await _orchestrator.Handler(Intercept<DeleteProduct>("DeleteProduct", "logger", logger.Delete));
 
         var cipher = new CipherHandler();
-        await _orchestrator.Handler(Intercept<CreateProduct>("CreateProduct", "cipher", logger.Create));
-
-
+        await _orchestrator.Handler(Intercept<CreateProduct>("CreateProduct", "cipher", cipher.Create));
     }
 
     private Func<T, Task> Intercept<T>(string method, string handlerName, Func<T, Task> handler)
@@ -89,5 +87,4 @@ public class Worker
         _orchestrator.Stop();
         _orchestrator.Dispose();
     }
-    
 }

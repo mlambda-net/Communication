@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\High.Processing.Communication\High.Processing.Communication.csproj" />
+        <ProjectReference Include="..\High.Processing.Communication\High.Processing.Communication.csproj"/>
     </ItemGroup>
 
 </Project>

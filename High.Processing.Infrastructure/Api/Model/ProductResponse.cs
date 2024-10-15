@@ -1,7 +1,6 @@
 ﻿namespace High.Processing.Infrastructure.Api.Model;
 
-public record ProductResponse
-(
+public record ProductResponse(
     Guid Id,
     string Code,
     string Name,

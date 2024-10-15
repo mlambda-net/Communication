@@ -1,5 +1,4 @@
 ﻿using High.Processing.Domain.Events;
-using High.Processing.Domain.Query;
 
 namespace High.Processing.App;
 

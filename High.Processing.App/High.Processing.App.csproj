@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\High.Processing.Domain\High.Processing.Domain.csproj" />
-      <ProjectReference Include="..\High.Processing.Infrastructure\High.Processing.Infrastructure.csproj" />
+        <ProjectReference Include="..\High.Processing.Domain\High.Processing.Domain.csproj"/>
+        <ProjectReference Include="..\High.Processing.Infrastructure\High.Processing.Infrastructure.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="prometheus-net" Version="8.2.1" />
+        <PackageReference Include="prometheus-net" Version="8.2.1"/>
     </ItemGroup>
 
 </Project>

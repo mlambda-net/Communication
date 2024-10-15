@@ -3,13 +3,13 @@ using High.Processing.Domain.Services;
 
 namespace High.Processing.Infrastructure.Event;
 
-public class EventOrchestrator: IEventHandler
+public class EventOrchestrator : IEventHandler
 {
     private readonly Subscriber _subscriber;
 
-    public EventOrchestrator(string host="localhost", int port=9090)
+    public EventOrchestrator(string host = "localhost", int port = 9090)
     {
-        this._subscriber = new Subscriber("localhost", 9090);
+        _subscriber = new Subscriber("localhost", 9090);
     }
 
     public void Start()
@@ -23,7 +23,6 @@ public class EventOrchestrator: IEventHandler
     }
 
 
-    
     public void Dispose()
     {
         _subscriber.Dispose();

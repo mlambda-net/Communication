@@ -1,14 +1,13 @@
 ﻿using High.Processing.Communication.Synchronous.Abstract;
-using NetMQ;
 using NetMQ.Sockets;
 
 namespace High.Processing.Communication.Synchronous.Socket;
 
 public class Client : IClient
 {
-    private readonly RequestSocket _socket;
     private readonly string _address;
     private readonly Pipeline _pipeline;
+    private readonly RequestSocket _socket;
 
     public Client(string host, int port)
     {

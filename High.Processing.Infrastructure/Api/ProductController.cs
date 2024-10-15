@@ -1,12 +1,10 @@
-﻿
-using High.Processing.Domain.Entity;
+﻿using High.Processing.Domain.Entity;
 using High.Processing.Domain.Events;
 using High.Processing.Domain.Persistency;
 using High.Processing.Domain.Query;
 using High.Processing.Domain.Services;
 using High.Processing.Infrastructure.Api.Model;
 using Microsoft.AspNetCore.Mvc;
-
 
 namespace High.Processing.Infrastructure.Api;
 
@@ -18,10 +16,7 @@ public class ProductController(IUnitOfWork uow, IEventSender sender) : Controlle
     public async Task<ActionResult<ProductResponse>> Get(Guid id)
     {
         var item = await uow.Products.GetBy(ProductById.ById(id));
-        if (item == null)
-        {
-            return NotFound();
-        }
+        if (item == null) return NotFound();
 
         return Ok(new ProductResponse(
             item.Id,
@@ -48,7 +43,7 @@ public class ProductController(IUnitOfWork uow, IEventSender sender) : Controlle
             Name = item.Name,
             Price = item.Price,
             Size = item.Size,
-            Weight = item.Weight,
+            Weight = item.Weight
         };
         await sender.Send(new CreateProduct(product));
         return Ok(new CreateProductResponse(product.Id));
@@ -64,10 +59,7 @@ public class ProductController(IUnitOfWork uow, IEventSender sender) : Controlle
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> Delete(Guid id)
     {
-       
-
         await sender.Send(new DeleteProduct(id));
         return NoContent();
     }
-
 }

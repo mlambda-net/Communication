@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
+﻿using System.Security.Cryptography;
 using System.Text.Json;
 using High.Processing.Domain.Events;
 
@@ -9,10 +6,10 @@ namespace High.Processing.App;
 
 public class CipherHandler
 {
+    private readonly byte[] _iv;
 
 
     private readonly byte[] _key;
-    private readonly byte[] _iv;
 
     public CipherHandler()
     {
@@ -46,7 +43,7 @@ public class CipherHandler
         {
             swEncrypt.Write(plainText);
         }
+
         return Convert.ToBase64String(msEncrypt.ToArray());
     }
-
 }

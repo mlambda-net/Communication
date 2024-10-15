@@ -2,7 +2,6 @@
 using High.Processing.Core.Specs;
 using High.Processing.Domain.Entity;
 
-
 namespace High.Processing.Domain.Query;
 
 public class ProductById(Guid id) : ISpecification<Product>

@@ -1,6 +1,6 @@
 ﻿namespace High.Processing.Communication.Synchronous;
 
-public interface IServer: ISocket
+public interface IServer : ISocket
 {
     void Start();
 

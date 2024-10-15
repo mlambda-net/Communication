@@ -1,18 +1,19 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using High.Processing.Communication.Router.Protocol;
 using NetMQ;
 using NetMQ.Sockets;
 
 namespace High.Processing.Communication.Router;
 
-public class Client: IDisposable
+public class Client : IDisposable
 {
-    private Guid _id;
     private readonly string _address;
-    private readonly DealerSocket _dealer;
-    private Dictionary<string, List<Action<string>>> _handlers;
     private readonly CancellationTokenSource _cancellation;
+    private readonly DealerSocket _dealer;
     private readonly Thread _listener;
+    private readonly Dictionary<string, List<Action<string>>> _handlers;
+    private readonly Guid _id;
 
     public Client(string host, int port)
     {
@@ -21,15 +22,20 @@ public class Client: IDisposable
         _dealer = new DealerSocket();
         _handlers = new Dictionary<string, List<Action<string>>>();
         _cancellation = new CancellationTokenSource();
-        _dealer.Options.Identity = System.Text.Encoding.UTF8.GetBytes(_id.ToString());
+        _dealer.Options.Identity = Encoding.UTF8.GetBytes(_id.ToString());
         _dealer.Connect(_address);
         _listener = new Thread(Listen);
+    }
+
+    public void Dispose()
+    {
+        _dealer.Dispose();
+        _cancellation.Dispose();
     }
 
 
     public void Connect()
     {
-       
         _listener.Start();
         Console.WriteLine($"{_id} connected to router...");
     }
@@ -53,20 +59,13 @@ public class Client: IDisposable
             var transform = (string received) =>
             {
                 var msg = JsonSerializer.Deserialize<T>(received);
-                if (msg != null)
-                {
-                    handler(msg);
-                }
+                if (msg != null) handler(msg);
             };
 
             if (_handlers.ContainsKey(info))
-            {
                 _handlers[address].Add(transform);
-            }
             else
-            {
                 _handlers.Add(address, [transform]);
-            }
         });
     }
 
@@ -93,22 +92,14 @@ public class Client: IDisposable
 
                 var msg = JsonSerializer.Deserialize<Message>(data);
                 if (msg != null && _handlers.TryGetValue(msg.Address, out var handlers))
-                {
                     handlers.AsParallel().ForAll(handler => handler(msg.Content));
-                }
             }
         }
-        catch (OperationCanceledException)
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             // Graceful exit
             Console.WriteLine("Message handling was canceled.");
         }
-
-    }
-
-    public void Dispose()
-    {
-        _dealer.Dispose();
-        _cancellation.Dispose();
     }
 }

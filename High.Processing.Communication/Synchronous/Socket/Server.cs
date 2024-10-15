@@ -1,10 +1,9 @@
 ﻿using High.Processing.Communication.Synchronous.Abstract;
-using NetMQ;
 using NetMQ.Sockets;
 
 namespace High.Processing.Communication.Synchronous.Socket;
 
-public class Server: IServer
+public class Server : IServer
 {
     private readonly Pipeline _pipeline;
 
@@ -17,12 +16,12 @@ public class Server: IServer
 
     public async Task Send<T>(T message)
     {
-      await _pipeline.Send(message);
+        await _pipeline.Send(message);
     }
 
     public async Task Receive<T>(Action<T> callback)
     {
-        await _pipeline.Receive<T>(callback);
+        await _pipeline.Receive(callback);
     }
 
     public void Start()

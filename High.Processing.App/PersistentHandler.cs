@@ -1,5 +1,4 @@
-﻿using High.Processing.Domain.Entity;
-using High.Processing.Domain.Events;
+﻿using High.Processing.Domain.Events;
 using High.Processing.Domain.Persistency;
 using High.Processing.Domain.Query;
 
@@ -30,6 +29,4 @@ public class PersistentHandler(IUnitOfWork uow)
             await uow.Products.Update(byId, product);
         }
     }
-
-
 }

@@ -1,15 +1,13 @@
-﻿using System.Reflection.Metadata;
-using High.Processing.Communication.Asynchronous;
-using High.Processing.Communication.Asynchronous.Abstract;
+﻿using High.Processing.Communication.Asynchronous.Abstract;
 using High.Processing.Communication.Asynchronous.PubSub;
 
 namespace High.Processing.Communication.Test;
 
 public class PubSubTest
 {
-    private Publisher sender;
-    private Receiver receiver;
     private TaskCompletionSource<bool> _completion;
+    private Receiver receiver;
+    private Publisher sender;
 
     [SetUp]
     public async Task Setup()
@@ -38,18 +36,15 @@ public class PubSubTest
         await sender.Send<string>("hello", "");
         await sender.Send<string>("hello", "");
         await sender.Send<string>("hello", "");
-        
-        Assert.IsTrue(_completion.Task.Result);
 
+        Assert.IsTrue(_completion.Task.Result);
     }
 
     [TearDown]
     public void TearDown()
     {
-
         sender.Dispose();
         receiver.Stop();
         receiver.Dispose();
     }
-
 }

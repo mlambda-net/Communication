@@ -13,9 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\High.Processing.Core\High.Processing.Core.csproj" />
-      <ProjectReference Include="..\High.Processing.Domain\High.Processing.Domain.csproj" />
-      <ProjectReference Include="..\High.Processing.Infrastructure\High.Processing.Infrastructure.csproj" />
+        <ProjectReference Include="..\High.Processing.Core\High.Processing.Core.csproj"/>
+        <ProjectReference Include="..\High.Processing.Domain\High.Processing.Domain.csproj"/>
+        <ProjectReference Include="..\High.Processing.Infrastructure\High.Processing.Infrastructure.csproj"/>
     </ItemGroup>
 
 </Project>

@@ -6,10 +6,9 @@ namespace High.Processing.Communication.Asynchronous.Abstract;
 
 public record Data(string Topic, string Message);
 
-public abstract class Sender: IDisposable
+public abstract class Sender : IDisposable
 {
-
-    private readonly ConcurrentQueue<Data> _messages= new();
+    private readonly ConcurrentQueue<Data> _messages = new();
     private readonly Thread _pushing;
 
     public Sender()
@@ -17,10 +16,15 @@ public abstract class Sender: IDisposable
         _pushing = new Thread(Push);
         _pushing.Start();
     }
-    
+
     protected abstract INetMQSocket Socket { get; }
-    
-    
+
+    public void Dispose()
+    {
+        Socket.Dispose();
+    }
+
+
     public Task Send<T>(T message, string topic)
     {
         return Task.Run(() =>
@@ -40,17 +44,10 @@ public abstract class Sender: IDisposable
     private void Push()
     {
         while (true)
-        {
             if (_messages.TryDequeue(out var data))
             {
                 Socket.SendMoreFrame(data.Topic);
                 Socket.SendFrame(data.Message);
             }
-        }
-    }
-    
-    public void Dispose()
-    {
-        Socket.Dispose();
     }
 }

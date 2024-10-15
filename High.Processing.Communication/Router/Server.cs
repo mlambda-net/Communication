@@ -1,17 +1,16 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Nodes;
 using High.Processing.Communication.Router.Protocol;
 using NetMQ;
 using NetMQ.Sockets;
 
 namespace High.Processing.Communication.Router;
 
-public class Server: IDisposable
+public class Server : IDisposable
 {
-    private readonly RouterSocket _router;
-    private readonly Thread _listener;
-    private readonly CancellationTokenSource _cancellation;
     private readonly Dictionary<string, Guid> _addresses;
+    private readonly CancellationTokenSource _cancellation;
+    private readonly Thread _listener;
+    private readonly RouterSocket _router;
     private readonly string _url;
 
     public Server(int port)
@@ -21,6 +20,12 @@ public class Server: IDisposable
         _listener = new Thread(Listen);
         _cancellation = new CancellationTokenSource();
         _addresses = new Dictionary<string, Guid>();
+    }
+
+    public void Dispose()
+    {
+        _router.Dispose();
+        _cancellation.Dispose();
     }
 
     public void Start()
@@ -67,8 +72,9 @@ public class Server: IDisposable
             }
         }
 
-        catch (OperationCanceledException)
+        catch (Exception e)
         {
+            Console.WriteLine(e);
             // Graceful exit
             Console.WriteLine("Message handling was canceled.");
         }
@@ -91,15 +97,9 @@ public class Server: IDisposable
         if (data == null) return;
 
         if (!_addresses.TryGetValue(data.Address, out var client)) return;
-       
+
         var msg = JsonSerializer.Serialize(new Content(data.Content));
         _router.SendMoreFrame(client.ToString());
         _router.SendFrame(message);
-    }
-
-    public void Dispose()
-    {
-        _router.Dispose();
-        _cancellation.Dispose();
     }
 }

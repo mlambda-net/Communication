@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\High.Processing.Core\High.Processing.Core.csproj" />
+        <ProjectReference Include="..\High.Processing.Core\High.Processing.Core.csproj"/>
     </ItemGroup>
 
 </Project>
